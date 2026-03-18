@@ -30,7 +30,7 @@ jobs:
         with:
           switches: -avz --delete
           path: dist/
-          remote_path: /home/u630685576/public_html/
+          remote_path: /home/u630685576/domains/azoralang.org/public_html/
           remote_host: ${{ secrets.HOSTINGER_HOST }}
           remote_port: ${{ secrets.HOSTINGER_PORT }}
           remote_user: ${{ secrets.HOSTINGER_USER }}
