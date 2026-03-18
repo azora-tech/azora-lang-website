@@ -28,7 +28,7 @@ jobs:
       - name: Deploy to Hostinger via SSH
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avz --delete
+          switches: -avz --exclude='code' --exclude='docs' --exclude='book' --exclude='.htaccess'
           path: dist/
           remote_path: /home/u630685576/domains/azoralang.org/public_html/
           remote_host: ${{ secrets.HOSTINGER_HOST }}
