@@ -5,7 +5,7 @@
 <h1 align="center">Azora Language Website</h1>
 
 <p align="center">
-  The official website for the <a href="https://azoralang.org">Azora</a> programming language — a modern, expressive language with clean syntax, generics, async/await, and multi-target compilation.
+  The official website for the <a href="https://azoralang.org">Azora Programming Language</a>, a modern, expressive language with clean syntax, generics, async/await, and multi-target compilation.
 </p>
 
 <p align="center">
