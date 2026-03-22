@@ -14,14 +14,14 @@ export async function loadWasmEngine(version) {
     document.head.appendChild(script)
   })
 
-  // The Kotlin/WASM webpack bundle exports to globalThis.compiler
-  // The module loads async chunks (WASM), so we poll until azInterpret is a callable function
-  const ns = await waitForModule()
+  // The Kotlin/WASM webpack bundle sets globalThis.compiler as an async module.
+  // It's thenable, so we can await it to get the resolved exports.
+  const mod = await waitForExports()
 
   return {
     async interpret(source) {
       try {
-        const json = await ns.azInterpret(source)
+        const json = await mod.azInterpret(source)
         return JSON.parse(json)
       } catch (e) {
         return { success: false, output: '', errors: e.message || String(e) }
@@ -29,7 +29,7 @@ export async function loadWasmEngine(version) {
     },
     async runTests(source) {
       try {
-        const json = await ns.azRunTests(source)
+        const json = await mod.azRunTests(source)
         return JSON.parse(json)
       } catch (e) {
         return { success: false, output: '', errors: e.message || String(e) }
@@ -38,13 +38,25 @@ export async function loadWasmEngine(version) {
   }
 }
 
-async function waitForModule(maxAttempts = 100) {
+async function waitForExports(maxAttempts = 200) {
   for (let i = 0; i < maxAttempts; i++) {
     const mod = globalThis.compiler
-    if (mod && typeof mod.azInterpret === 'function') {
-      return mod
+    if (mod) {
+      // The webpack async module is thenable. Await it to resolve exports.
+      try {
+        const resolved = await mod
+        if (resolved && typeof resolved.azInterpret === 'function') {
+          return resolved
+        }
+      } catch (_) {
+        // Not yet ready, keep polling
+      }
+      // Also check if exports are directly available (non-async case)
+      if (typeof mod.azInterpret === 'function') {
+        return mod
+      }
     }
-    await new Promise(r => setTimeout(r, 100))
+    await new Promise(r => setTimeout(r, 50))
   }
   throw new Error('WASM module did not initialize within timeout')
 }

@@ -121,7 +121,7 @@ func main() {
 }`,
   },
   {
-    title: 'Nodes (Inheritance)',
+    title: 'Inheritance',
     code: `node Animal(var name: String) {
     func speak(): String {
         return "..."
@@ -333,38 +333,33 @@ func main() {
 }`,
   },
   {
-    title: 'Bridge (FFI)',
-    code: `// Bridge maps foreign functions to Azora names
-// Each target platform has its own bridge block
-
-@target(.Native)
-bridge .C {
-    func sin as az_sin(x: Real): Real
-    func cos as az_cos(x: Real): Real
-    func sqrt as az_sqrt(x: Real): Real
+    title: 'Pointers & Memory',
+    code: `pack Node {
+    var value: Int
+    var next: Node* = null
 }
 
-@target(.WebJs)
-bridge .JS {
-    func Math.sin as az_sin(x: Real): Real
-    func Math.cos as az_cos(x: Real): Real
-    func Math.sqrt as az_sqrt(x: Real): Real
-}
+func main() {
+    // Heap allocation
+    var a = alloc Node(value: 1, next: null)
+    var b = alloc Node(value: 2, next: null)
+    var c = alloc Node(value: 3, next: null)
 
-@target(.Swift)
-bridge .SWIFT {
-    func Foundation.sin as az_sin(x: Real): Real
-    func Foundation.cos as az_cos(x: Real): Real
-    func Foundation.sqrt as az_sqrt(x: Real): Real
-}
+    // Link nodes: a -> b -> c
+    (*a).next = b
+    (*b).next = c
 
-// Shared public API
-expose scope std {
-    scope math {
-        func sin(x: Real): Real { return az_sin(x) }
-        func cos(x: Real): Real { return az_cos(x) }
-        func sqrt(x: Real): Real { return az_sqrt(x) }
+    // Traverse the linked list
+    var current: Node* = a
+    while current != null {
+        println((*current).value)
+        current = (*current).next
     }
+
+    // Cleanup
+    drop c
+    drop b
+    drop a
 }`,
   },
   {
@@ -384,7 +379,7 @@ solo Database {
     var connected: Bool = false
 
     func connect() {
-        self.connected = true
+        connected = true
         println("Database connected")
     }
 
@@ -401,7 +396,10 @@ wrap AppModule {
 }
 
 func main() {
-    // Resolve singletons from the container
+    // Start the DI container lifecycle
+    AppModule.initLifecycle()
+
+    // Resolve singletons from the active wrap
     fin logger = inject Logger
     fin db = inject Database
 
@@ -409,6 +407,9 @@ func main() {
     db.connect()
     fin result = db.query("SELECT * FROM users")
     logger.log(result)
+
+    // End lifecycle, runs solo destructors
+    AppModule.endLifecycle()
 }`,
   },
   {
@@ -429,7 +430,7 @@ view Greeting(name: String) {
     println("Visited \${visits} times")
 
     // Side effects that track dependencies
-    effect (name) {
+    effect name {
         println("Name changed to: \${name}")
     }
 }

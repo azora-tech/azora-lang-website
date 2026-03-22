@@ -138,7 +138,7 @@ const features = [
   { icon: 'tuples', title: 'Tuples', desc: 'Built-in heterogeneous tuples with (a, b, c) syntax. Access elements by position with .0, .1, .2 notation.' },
   { icon: 'async', title: 'Async / Await', desc: 'First-class structured concurrency with tasks, async/await, and launch. Built into the language, not bolted on.' },
   { icon: 'flows', title: 'Flows & Generators', desc: 'Lazy generator sequences with yield. Compose data pipelines that only compute values on demand.' },
-  { icon: 'trees', title: 'Nodes (Inheritance)', desc: 'Single inheritance with node types. Override with repl, prevent extension with leaf, call parent with base.' },
+  { icon: 'trees', title: 'Inheritance', desc: 'Single inheritance with node types. Override with repl, prevent extension with leaf, call parent with base.' },
   { icon: 'testing', title: 'Built-in Testing', desc: 'Test blocks are a language construct. Write tests next to your code with assert and trace, no framework needed.' },
   { icon: 'collections', title: 'Collection Literals', desc: 'Native syntax for arrays, sets (![...]), and maps (["key": val]). Static arrays with fill<T>(size).' },
   { icon: 'errors', title: 'Error Handling', desc: 'Typed error returns with fail, throw, try, and catch. Guard statements for nullable unwrapping. Rescue for recovery.' },

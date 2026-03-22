@@ -1,46 +1,27 @@
-import { useState, useMemo, useEffect } from 'react'
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import azoraPrism from '../data/azora-prism'
+import { useState, useMemo } from 'react'
+import Prism from 'prismjs'
+import azoraDef from '../data/azora-prism'
 import { codeExamples } from '../data/codeExamples'
 
-SyntaxHighlighter.registerLanguage('azora', azoraPrism)
+azoraDef(Prism)
 
-export const darkTheme = {
-  'code[class*="language-"]': {
-    color: '#D9D9D9',
-    fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace",
-    fontSize: '0.875rem',
-    lineHeight: '1.6',
-  },
-  'pre[class*="language-"]': {
-    color: '#D9D9D9',
-    background: '#141414',
-    fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace",
-    fontSize: '0.875rem',
-    lineHeight: '1.6',
-    padding: '1.25rem',
-    margin: '0',
-    overflow: 'auto',
-    borderRadius: '0',
-  },
-  keyword: { color: '#D16B8E', fontWeight: 'bold' },
-  boolean: { color: '#D16B8E', fontWeight: 'bold' },
-  'class-name': { color: '#5FA89F' },
-  builtin: { color: '#D4A574' },
-  function: { color: '#D4A574' },
-  string: { color: '#7DBF8A' },
-  number: { color: '#ECECEC' },
-  'doc-comment': { color: '#6B9F77', fontStyle: 'italic' },
-  'doc-tag': { color: '#5BA3D0', fontWeight: 'bold' },
-  'doc-param-name': { color: '#D9D9D9' },
-  comment: { color: '#676767', fontStyle: 'italic' },
-  annotation: { color: '#E6C96B' },
-  variable: { color: '#B06FA8', fontStyle: 'italic' },
-  interpolation: { color: '#D9D9D9' },
-  'interpolation-punctuation': { color: '#E6C96B' },
-  operator: { color: '#B2B3B3' },
-  punctuation: { color: '#B2B3B3' },
-}
+const tokenCSS = `
+.az-showcase .token.keyword { color: #D16B8E; font-weight: bold; }
+.az-showcase .token.boolean, .az-showcase .token.null-literal { color: #D16B8E; font-weight: bold; }
+.az-showcase .token.class-name, .az-showcase .token.type-keyword, .az-showcase .token.type-name { color: #5FA89F; }
+.az-showcase .token.builtin, .az-showcase .token.builtin-fn, .az-showcase .token.function { color: #D4A574; }
+.az-showcase .token.string { color: #7DBF8A; }
+.az-showcase .token.number { color: #ECECEC; }
+.az-showcase .token.comment { color: #676767; font-style: italic; }
+.az-showcase .token.doc-comment { color: #6B9F77; font-style: italic; }
+.az-showcase .token.doc-tag { color: #5BA3D0; font-weight: bold; }
+.az-showcase .token.annotation, .az-showcase .token.decorator { color: #E6C96B; }
+.az-showcase .token.variable, .az-showcase .token.preprocessor { color: #B06FA8; font-style: italic; }
+.az-showcase .token.interpolation { color: #D9D9D9; }
+.az-showcase .token.interpolation-punctuation { color: #E6C96B; }
+.az-showcase .token.operator { color: #B2B3B3; }
+.az-showcase .token.punctuation { color: #B2B3B3; }
+`
 
 const PlayIcon = () => (
   <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
@@ -67,17 +48,18 @@ function detectCapabilities(code) {
   return { hasMain, hasTests }
 }
 
+function highlightCode(code) {
+  return Prism.highlight(code, Prism.languages.azora, 'azora')
+}
+
 export default function CodeShowcase({ engine }) {
   const [selected, setSelected] = useState(0)
   const [output, setOutput] = useState(null)
   const [runningMode, setRunningMode] = useState(null)
-  const [mounted, setMounted] = useState(false)
   const example = codeExamples[selected]
 
-  // Force a re-render after mount so PrismLight applies theme correctly
-  useEffect(() => { setMounted(true) }, [])
-
   const { hasMain, hasTests } = useMemo(() => detectCapabilities(example.code), [example.code])
+  const highlighted = useMemo(() => highlightCode(example.code), [example.code])
   const running = runningMode !== null
 
   function handleSelect(i) {
@@ -105,6 +87,7 @@ export default function CodeShowcase({ engine }) {
 
   return (
     <section id="examples" className="py-20 px-4">
+      <style>{tokenCSS}</style>
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold mb-2 text-center">Code Examples</h2>
         <p className="text-az-45 text-center mb-10 max-w-xl mx-auto">
@@ -167,16 +150,20 @@ export default function CodeShowcase({ engine }) {
               )}
             </div>
           </div>
-          {mounted && (
-            <SyntaxHighlighter
-              key={selected}
-              language="azora"
-              style={darkTheme}
-              wrapLongLines
-            >
-              {example.code}
-            </SyntaxHighlighter>
-          )}
+          <pre
+            className="az-showcase overflow-auto"
+            style={{
+              background: '#141414',
+              padding: '1.25rem',
+              margin: 0,
+              fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace",
+              fontSize: '0.875rem',
+              lineHeight: '1.6',
+              color: '#D9D9D9',
+            }}
+          >
+            <code dangerouslySetInnerHTML={{ __html: highlighted }} />
+          </pre>
           {output && (
             <div className="border-t border-az-75 px-4 py-3 bg-az-95 font-mono text-xs">
               <div className="text-az-60 mb-1">Output</div>
