@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import azoraPrism from '../data/azora-prism'
 import { codeExamples } from '../data/codeExamples'
@@ -21,7 +21,7 @@ export const darkTheme = {
     padding: '1.25rem',
     margin: '0',
     overflow: 'auto',
-    borderRadius: '0.5rem',
+    borderRadius: '0',
   },
   keyword: { color: '#D16B8E', fontWeight: 'bold' },
   boolean: { color: '#D16B8E', fontWeight: 'bold' },
@@ -71,7 +71,11 @@ export default function CodeShowcase({ engine }) {
   const [selected, setSelected] = useState(0)
   const [output, setOutput] = useState(null)
   const [runningMode, setRunningMode] = useState(null)
+  const [mounted, setMounted] = useState(false)
   const example = codeExamples[selected]
+
+  // Force a re-render after mount so PrismLight applies theme correctly
+  useEffect(() => { setMounted(true) }, [])
 
   const { hasMain, hasTests } = useMemo(() => detectCapabilities(example.code), [example.code])
   const running = runningMode !== null
@@ -137,11 +141,17 @@ export default function CodeShowcase({ engine }) {
           <div className="flex items-center justify-between px-4 py-2.5 bg-az-85 border-b border-az-75">
             <span className="text-xs text-az-60 font-mono">{example.title.replace(/[^a-zA-Z0-9]+/g, '')}.az</span>
             <div className="flex items-center gap-2">
+              {engine.loading && (
+                <span className="inline-flex items-center gap-1.5 text-xs text-az-50"><Spinner /> Loading engine...</span>
+              )}
+              {engine.error && (
+                <span className="text-xs text-az-red">Engine error</span>
+              )}
               {hasMain && (
                 <button
                   onClick={handleRun}
                   disabled={!engine.ready || running}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-green/15 text-az-green hover:bg-az-green/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-green/15 text-az-green hover:bg-az-green/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {runningMode === 'run' ? <><Spinner /> Running</> : <><PlayIcon /> Run</>}
                 </button>
@@ -150,20 +160,23 @@ export default function CodeShowcase({ engine }) {
                 <button
                   onClick={handleRunTests}
                   disabled={!engine.ready || running}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-secondary/15 text-az-secondary hover:bg-az-secondary/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-secondary/15 text-az-secondary hover:bg-az-secondary/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {runningMode === 'test' ? <><Spinner /> Running Tests</> : <><CheckIcon /> Run Tests</>}
                 </button>
               )}
             </div>
           </div>
-          <SyntaxHighlighter
-            language="azora"
-            style={darkTheme}
-            wrapLongLines
-          >
-            {example.code}
-          </SyntaxHighlighter>
+          {mounted && (
+            <SyntaxHighlighter
+              key={selected}
+              language="azora"
+              style={darkTheme}
+              wrapLongLines
+            >
+              {example.code}
+            </SyntaxHighlighter>
+          )}
           {output && (
             <div className="border-t border-az-75 px-4 py-3 bg-az-95 font-mono text-xs">
               <div className="text-az-60 mb-1">Output</div>

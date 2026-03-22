@@ -147,11 +147,14 @@ export default function Hero({ engine }) {
           <div className="flex items-center justify-between px-4 py-2.5 bg-az-85 border-b border-az-75 shrink-0">
             <span className="text-xs text-az-60 font-mono">Main.az</span>
             <div className="flex items-center gap-2">
+              {engine.loading && (
+                <span className="inline-flex items-center gap-1.5 text-xs text-az-50"><Spinner /> Loading...</span>
+              )}
               {hasMain && (
                 <button
                   onClick={handleRun}
                   disabled={!engine.ready || running}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-green/15 text-az-green hover:bg-az-green/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-green/15 text-az-green hover:bg-az-green/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {runningMode === 'run' ? <><Spinner /> Running</> : <><PlayIcon /> Run</>}
                 </button>
@@ -160,7 +163,7 @@ export default function Hero({ engine }) {
                 <button
                   onClick={handleRunTests}
                   disabled={!engine.ready || running}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-secondary/15 text-az-secondary hover:bg-az-secondary/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium bg-az-secondary/15 text-az-secondary hover:bg-az-secondary/25 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {runningMode === 'test' ? <><Spinner /> Running Tests</> : <><CheckIcon /> Run Tests</>}
                 </button>

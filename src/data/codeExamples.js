@@ -121,20 +121,20 @@ func main() {
 }`,
   },
   {
-    title: 'Trees (Inheritance)',
-    code: `tree Animal(var name: String) {
+    title: 'Nodes (Inheritance)',
+    code: `node Animal(var name: String) {
     func speak(): String {
         return "..."
     }
 }
 
-tree Dog(var breed: String, var name: String) : Animal(name) {
+node Dog(var breed: String, var name: String) : Animal(name) {
     repl func speak(): String {
         return "Woof! I'm \${this.name}"
     }
 }
 
-tree Cat(var name: String) : Animal(name) {
+node Cat(var name: String) : Animal(name) {
     repl func speak(): String {
         return "Meow!"
     }
@@ -315,15 +315,17 @@ deco Serializable
 @Range(min = 0, max = 100)
 fin health: Int = 50
 
-// Compile-time introspection
-inline if hasDeco(health, Serializable) {
-    inline trace { "health is serializable" }
-}
+// Compile-time introspection using deepinline
+deepinline {
+    if hasDeco(health, Serializable) {
+        trace { "health is serializable" }
+    }
 
-inline if hasDeco(health, Range) {
-    inline fin minVal = getDeco(health, Range, min)
-    inline fin maxVal = getDeco(health, Range, max)
-    inline trace { "health range: " + $minVal + ".." + $maxVal }
+    if hasDeco(health, Range) {
+        fin minVal = getDeco(health, Range, min)
+        fin maxVal = getDeco(health, Range, max)
+        trace { "health range: \${$minVal}..\${$maxVal}" }
+    }
 }
 
 func main() {
@@ -363,6 +365,80 @@ expose scope std {
         func cos(x: Real): Real { return az_cos(x) }
         func sqrt(x: Real): Real { return az_sqrt(x) }
     }
+}`,
+  },
+  {
+    title: 'Dependency Injection',
+    code: `// Singleton services with solo
+solo Logger {
+    var level: Int = 1
+
+    func log(msg: String) {
+        if level > 0 {
+            println("[LOG] " + msg)
+        }
+    }
+}
+
+solo Database {
+    var connected: Bool = false
+
+    func connect() {
+        self.connected = true
+        println("Database connected")
+    }
+
+    func query(sql: String): String {
+        if !connected { return "not connected" }
+        return "result for: " + sql
+    }
+}
+
+// DI container wiring
+wrap AppModule {
+    solo Logger
+    solo Database
+}
+
+func main() {
+    // Resolve singletons from the container
+    fin logger = inject Logger
+    fin db = inject Database
+
+    logger.log("Starting app")
+    db.connect()
+    fin result = db.query("SELECT * FROM users")
+    logger.log(result)
+}`,
+  },
+  {
+    title: 'Reactivity',
+    code: `// Persistent state with rem
+func counter() {
+    rem count: Int = 0
+    count = count + 1
+    println("Call #\${count}")
+}
+
+// Reactive views
+view Greeting(name: String) {
+    rem visits: Int = 0
+    visits = visits + 1
+
+    println("Hello, \${name}!")
+    println("Visited \${visits} times")
+
+    // Side effects that track dependencies
+    effect (name) {
+        println("Name changed to: \${name}")
+    }
+}
+
+func main() {
+    // rem persists across calls
+    counter()   // Call #1
+    counter()   // Call #2
+    counter()   // Call #3
 }`,
   },
 ]

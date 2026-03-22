@@ -14,8 +14,8 @@ export async function loadWasmEngine(version) {
     document.head.appendChild(script)
   })
 
-  // The new Kotlin/WASM webpack bundle exports to globalThis.compiler
-  // Wait for the module to initialize (it uses async loading)
+  // The Kotlin/WASM webpack bundle exports to globalThis.compiler
+  // The module loads async chunks (WASM), so we poll until azInterpret is a callable function
   const ns = await waitForModule()
 
   return {
@@ -38,10 +38,11 @@ export async function loadWasmEngine(version) {
   }
 }
 
-async function waitForModule(maxAttempts = 50) {
+async function waitForModule(maxAttempts = 100) {
   for (let i = 0; i < maxAttempts; i++) {
-    if (typeof globalThis.compiler !== 'undefined' && globalThis.compiler.azInterpret) {
-      return globalThis.compiler
+    const mod = globalThis.compiler
+    if (mod && typeof mod.azInterpret === 'function') {
+      return mod
     }
     await new Promise(r => setTimeout(r, 100))
   }
