@@ -22,6 +22,7 @@ export default function Navbar() {
         <a href="#" className="flex items-center gap-2">
           <span className="font-mono font-bold text-xl text-az-primary">Az</span>
           <span className="font-semibold text-az-10">Azora Programming Language</span>
+          <span className="text-[10px] text-az-60 ml-1.5 border border-az-65 rounded px-1.5 py-0.5">v0.0.1</span>
         </a>
 
         {/* Desktop links */}

@@ -15,6 +15,16 @@ const targets = [
     color: 'text-pastel-yellow',
   },
   {
+    name: 'Python',
+    desc: 'Generate Python 3 code. Integrate with the Python ecosystem for data science, scripting, and automation.',
+    color: 'text-pastel-orange',
+  },
+  {
+    name: 'Swift',
+    desc: 'Compile to Swift 6.2 for Apple platforms. Native protocols, classes, and Foundation integration.',
+    color: 'text-pastel-pink',
+  },
+  {
     name: 'LLVM IR',
     desc: 'Compile to LLVM intermediate representation for native performance on any platform.',
     color: 'text-pastel-green',
@@ -29,7 +39,7 @@ export default function Targets() {
         <p className="text-az-45 text-center mb-12 max-w-2xl mx-auto">
           One language, multiple platforms. Azora compiles to the backend that fits your project.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {targets.map(t => (
             <div key={t.name} className="rounded-xl border border-az-75 bg-az-85 p-6 text-center hover:border-az-60 transition-colors">
               <h3 className={`font-mono font-bold text-lg mb-3 ${t.color}`}>{t.name}</h3>

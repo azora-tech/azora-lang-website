@@ -9,7 +9,7 @@ const links = [
   },
   {
     title: 'The Azora Book',
-    desc: 'A comprehensive 30-chapter guide covering everything from basics to advanced concurrency.',
+    desc: 'A comprehensive 41-chapter guide covering everything from basics to advanced concurrency, inheritance, FFI, and more.',
     href: 'https://book.azoralang.org',
     cta: 'Start Reading',
     accent: 'bg-az-secondary/10 border-az-secondary/30 hover:border-az-secondary/60',

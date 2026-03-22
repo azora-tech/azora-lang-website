@@ -12,7 +12,12 @@ const features = [
   {
     icon: '<T>',
     title: 'Generics & Specs',
-    desc: 'Full generic types and functions with spec constraints. Write reusable, type-safe abstractions without compromise.',
+    desc: 'Full generic types and functions with spec constraints. Monomorphized at compile time for zero-cost abstractions.',
+  },
+  {
+    icon: '(,)',
+    title: 'Tuples',
+    desc: 'Built-in heterogeneous tuples with (a, b, c) syntax. Access elements by position with .0, .1, .2 notation.',
   },
   {
     icon: '~>',
@@ -25,6 +30,11 @@ const features = [
     desc: 'Lazy generator sequences with yield. Compose data pipelines that only compute values on demand.',
   },
   {
+    icon: 'tree',
+    title: 'Trees (Inheritance)',
+    desc: 'Single inheritance with tree types. Override with repl, prevent extension with seal, call parent with base.',
+  },
+  {
     icon: '!',
     title: 'Built-in Testing',
     desc: 'Test blocks are a language construct. Write tests next to your code with assert and trace, no framework needed.',
@@ -32,22 +42,22 @@ const features = [
   {
     icon: '[]',
     title: 'Collection Literals',
-    desc: 'Native syntax for arrays, sets (![...]), and maps (["key": val]). Literal-to-container coercion for List, Set, and Map types.',
+    desc: 'Native syntax for arrays, sets (![...]), and maps (["key": val]). Static arrays with fill<T>(size).',
   },
   {
     icon: 'fail',
     title: 'Error Handling',
-    desc: 'Typed error returns with fail, try, and catch. No exceptions. Errors are values you handle explicitly.',
+    desc: 'Typed error returns with fail, throw, try, and catch. Guard statements for nullable unwrapping. Rescue for recovery.',
   },
   {
     icon: '*p',
-    title: 'Pointers & Allocators',
-    desc: 'Manual memory control with alloc, drop, ref, and mut. Regions for stack allocation and unsafe blocks when you need them.',
+    title: 'Memory Management',
+    desc: 'Manual memory control with alloc, drop, ref, and mut. Regions for arena allocation and unsafe blocks when you need them.',
   },
   {
     icon: '=>',
     title: 'Multi-Target Compilation',
-    desc: 'Compile to Kotlin/JVM, C#/.NET, JavaScript, or LLVM IR from a single codebase. Write once, run anywhere.',
+    desc: 'Compile to Kotlin/JVM, C#/.NET, JavaScript, Python, Swift, or LLVM IR from a single codebase.',
   },
   {
     icon: '@',
@@ -58,6 +68,16 @@ const features = [
     icon: '#',
     title: 'Compile-Time Execution',
     desc: 'Inline if/for blocks evaluate at compile time. Conditionally emit code, unroll loops, and resolve constants before runtime.',
+  },
+  {
+    icon: 'FFI',
+    title: 'Bridge (Foreign Functions)',
+    desc: 'Call native C, Objective-C, JVM, JavaScript, C#, Python, and Swift functions via the bridge keyword with per-target mappings.',
+  },
+  {
+    icon: 'in/out',
+    title: 'Contracts',
+    desc: 'Preconditions with in, postconditions with out. Design by Contract philosophy enforced at runtime with clear error messages.',
   },
 ]
 

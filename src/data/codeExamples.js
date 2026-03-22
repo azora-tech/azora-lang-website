@@ -20,7 +20,7 @@ export const codeExamples = [
     count = items.length
 
     println(greeting)
-    println(count)
+    println("\${count}")
 }`,
   },
   {
@@ -39,12 +39,35 @@ func apply(value: Int, transform: (Int) -> Int): Int {
 }
 
 func main() {
-    println(add(3, 4))
-    println(square(5))
+    println("\${add(3, 4)}")
+    println("\${square(5)}")
 
     // Lambda
     fin double = { x -> x * 2 }
-    println(apply(5, double))
+    println("\${apply(5, double)}")
+}`,
+  },
+  {
+    title: 'Tuples',
+    code: `func divmod(a: Int, b: Int): (Int, Int) {
+    return (a / b, a % b)
+}
+
+func main() {
+    // Tuple literal
+    fin pair = (42, "hello")
+    println("\${pair.0}")
+    println(pair.1)
+
+    // Tuple as return value
+    fin result = divmod(17, 5)
+    println("quotient: \${result.0}")
+    println("remainder: \${result.1}")
+
+    // Nested tuple
+    fin nested = (1, (2, 3), "end")
+    fin inner = nested.1
+    println("\${inner.0}")
 }`,
   },
   {
@@ -55,7 +78,10 @@ func main() {
 }
 
 enum Direction {
-    North, South, East, West
+    North
+    South
+    East
+    West
 }
 
 func main() {
@@ -67,7 +93,7 @@ func main() {
     println("Distance squared: \${dx * dx + dy * dy}")
 
     fin dir = Direction.North
-    println(dir)
+    println("\${dir}")
 }`,
   },
   {
@@ -80,8 +106,8 @@ func main() {
 
 func describe(shape: Shape): String {
     return when shape {
-        is .Circle -> "circle"
-        is .Rectangle -> "rectangle"
+        is .Circle -> "circle with r=\${shape.radius}"
+        is .Rectangle -> "rect \${shape.width}x\${shape.height}"
         is .Point -> "point"
     }
 }
@@ -89,12 +115,38 @@ func describe(shape: Shape): String {
 func main() {
     fin c = Shape.Circle(5.0)
     fin r = Shape.Rectangle(3.0, 4.0)
-    fin p = Shape.Point
 
     println(describe(c))
     println(describe(r))
-    println(describe(p))
-    println(c.radius)
+}`,
+  },
+  {
+    title: 'Trees (Inheritance)',
+    code: `tree Animal(var name: String) {
+    func speak(): String {
+        return "..."
+    }
+}
+
+tree Dog(var breed: String, var name: String) : Animal(name) {
+    repl func speak(): String {
+        return "Woof! I'm \${this.name}"
+    }
+}
+
+tree Cat(var name: String) : Animal(name) {
+    repl func speak(): String {
+        return "Meow!"
+    }
+}
+
+func main() {
+    fin dog = Dog(breed: "Labrador", name: "Rex")
+    fin cat = Cat("Whiskers")
+
+    println(dog.speak())
+    println(cat.speak())
+    println(dog.breed)
 }`,
   },
   {
@@ -157,7 +209,7 @@ task main() {
     println("Sum 0..5: \${sum}")
 
     async for e in evens(10) {
-        println(e)
+        println("\${e}")
     }
 }`,
   },
@@ -188,7 +240,7 @@ test "factorial of 1 is 1" {
 }
 
 func safeDivide(a: Int, b: Int): Int!MathError {
-    if b == 0 { return fail .DivisionByZero }
+    if b == 0 { throw .DivisionByZero }
     return a / b
 }
 
@@ -197,18 +249,37 @@ func main() {
     fin result = safeDivide(10, 0) catch -1
     println("10 / 0 = \${result}")
 
-    // Catch with lambda
-    fin msg = safeDivide(8, 0) catch { err ->
-        when err {
-            .DivisionByZero -> "Cannot divide by zero"
-            .Overflow -> "Overflow occurred"
-        }
-    }
-    println(msg)
-
     // Successful division
     fin ok = safeDivide(10, 2) catch 0
     println("10 / 2 = \${ok}")
+}`,
+  },
+  {
+    title: 'Contracts',
+    code: `func clamp(x: Int, lo: Int, hi: Int): Int
+in {
+    assert lo <= hi { "lo must be <= hi" }
+}
+out { r ->
+    assert r >= lo { "result must be >= lo" }
+    assert r <= hi { "result must be <= hi" }
+}
+scope {
+    if x < lo { return lo }
+    if x > hi { return hi }
+    return x
+}
+
+test "clamp within range" {
+    assert clamp(5, 0, 10) == 5
+}
+
+test "clamp below minimum" {
+    assert clamp(-5, 0, 10) == 0
+}
+
+test "clamp above maximum" {
+    assert clamp(15, 0, 10) == 10
 }`,
   },
   {
@@ -218,7 +289,7 @@ func main() {
     fin numbers = [1, 2, 3, 4, 5]
     println("Array length: \${numbers.length}")
 
-    // Set literal — deduplicates
+    // Set literal (deduplicates)
     fin unique = ![1, 2, 2, 3, 3, 3]
     println("Set length: \${unique.length}")
 
@@ -250,37 +321,48 @@ inline if hasDeco(health, Serializable) {
 }
 
 inline if hasDeco(health, Range) {
-    fin $minVal = getDeco(health, Range::min)
-    fin $maxVal = getDeco(health, Range::max)
+    inline fin minVal = getDeco(health, Range, min)
+    inline fin maxVal = getDeco(health, Range, max)
     inline trace { "health range: " + $minVal + ".." + $maxVal }
 }
 
 func main() {
-    trace { "Health: \${health}" }
+    println("Health: \${health}")
 }`,
   },
   {
-    title: 'Pointers & Allocators (todo. fix)',
-    code: `pack Node {
-    var value: Int
-    var label: String
+    title: 'Bridge (FFI)',
+    code: `// Bridge maps foreign functions to Azora names
+// Each target platform has its own bridge block
+
+@target(.Native)
+bridge .C {
+    func sin as az_sin(x: Real): Real
+    func cos as az_cos(x: Real): Real
+    func sqrt as az_sqrt(x: Real): Real
 }
 
-func main() {
-    // Heap allocation
-    var p = alloc Node(value: 42, label: "hello")
-    defer drop p // not necessary, automatically deallocated
+@target(.WebJs)
+bridge .JS {
+    func Math.sin as az_sin(x: Real): Real
+    func Math.cos as az_cos(x: Real): Real
+    func Math.sqrt as az_sqrt(x: Real): Real
+}
 
-    println("Value: \${p.value}")
-    println("Label: \${p.label}")
+@target(.Swift)
+bridge .SWIFT {
+    func Foundation.sin as az_sin(x: Real): Real
+    func Foundation.cos as az_cos(x: Real): Real
+    func Foundation.sqrt as az_sqrt(x: Real): Real
+}
 
-    // Mutate through pointer
-    p.value = 100
-    println("Updated: \${p.value}")
-
-    // Dereference
-    fin node = *p
-    println(node)
+// Shared public API
+expose scope std {
+    scope math {
+        func sin(x: Real): Real { return az_sin(x) }
+        func cos(x: Real): Real { return az_cos(x) }
+        func sqrt(x: Real): Real { return az_sqrt(x) }
+    }
 }`,
   },
 ]

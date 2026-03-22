@@ -12,7 +12,7 @@ pack App {
 }
 
 impl App {
-    func greet(): String {
+    func greet(): String { ref self ->
         return "Hello from \${self.name}!"
     }
 }
@@ -118,7 +118,7 @@ export default function Hero({ engine }) {
             Expressive.
           </h1>
           <p className="text-lg text-az-40 mb-8 max-w-xl">
-            Azora is an experimental modern programming language with clean syntax, reactive-by-default semantics, powerful generics, first-class async, metaprogramming, and multi-target compilation. Designed to be expressive without compromises. Currently in early development, expect rapid changes as the language evolves.
+            Azora is a modern programming language with clean syntax, powerful generics, first-class async, metaprogramming, and multi-target compilation. Compiles to JavaScript, Kotlin, C#, Python, Swift, and LLVM IR. Version 0.0.1.
           </p>
           <div className="flex flex-wrap gap-4">
             <a

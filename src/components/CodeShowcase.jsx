@@ -160,7 +160,7 @@ export default function CodeShowcase({ engine }) {
           <SyntaxHighlighter
             language="azora"
             style={darkTheme}
-            customStyle={{ background: '#141414', padding: '1.25rem', margin: 0 }}
+            wrapLongLines
           >
             {example.code}
           </SyntaxHighlighter>
