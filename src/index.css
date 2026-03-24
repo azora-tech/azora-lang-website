@@ -35,11 +35,13 @@
   --color-pastel-pink: #D16B8E;
   --color-pastel-teal: #5FA89F;
   --color-pastel-blue: #5BA3D0;
-  --color-pastel-orange: #D4A574;
+  --color-pastel-orange: #E8944A;
   --color-pastel-green: #7DBF8A;
   --color-pastel-yellow: #E6C96B;
-  --color-pastel-red: #D17179;
+  --color-pastel-red: #E63946;
   --color-pastel-purple: #B06FA8;
+  --color-pastel-darkblue: #3A6FB0;
+  --color-pastel-white: #E8E8E8;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;

@@ -118,7 +118,7 @@ export default function Hero({ engine }) {
             Expressive.
           </h1>
           <p className="text-lg text-az-40 mb-8 max-w-xl">
-            Azora is a modern programming language with clean syntax, powerful generics, first-class async, metaprogramming, and multi-target compilation. Compiles to JavaScript, Kotlin, C#, Python, Swift, and LLVM IR. Version 0.0.1.
+            Azora is a modern programming language with clean syntax, powerful generics, first-class async, metaprogramming, and multi-target compilation. Compiles to JavaScript, Kotlin, C#, Python, Swift, Dart, Rust, LLVM IR, and WebAssembly. Version 0.0.1.
           </p>
           <div className="flex flex-wrap gap-4">
             <a

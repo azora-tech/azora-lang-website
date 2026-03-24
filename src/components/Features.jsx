@@ -143,7 +143,7 @@ const features = [
   { icon: 'collections', title: 'Collection Literals', desc: 'Native syntax for arrays, sets (![...]), and maps (["key": val]). Static arrays with fill<T>(size).' },
   { icon: 'errors', title: 'Error Handling', desc: 'Typed error returns with fail, throw, try, and catch. Guard statements for nullable unwrapping. Rescue for recovery.' },
   { icon: 'memory', title: 'Memory Management', desc: 'Manual memory control with alloc, drop, ref, and mut. Regions for arena allocation and unsafe blocks when you need them.' },
-  { icon: 'targets', title: 'Multi-Target Compilation', desc: 'Compile to Kotlin/JVM, C#/.NET, JavaScript, Python, Swift, or LLVM IR from a single codebase.' },
+  { icon: 'targets', title: 'Multi-Target Compilation', desc: 'Compile to Kotlin/JVM, C#/.NET, JavaScript, Python, Swift, Dart, Rust, LLVM IR, or WebAssembly from a single codebase.' },
   { icon: 'meta', title: 'Metaprogramming', desc: 'Decorators, compile-time introspection with hasDeco and getDeco, and deepinline blocks for bulk code generation.' },
   { icon: 'ctce', title: 'Compile-Time Execution', desc: 'Inline if/for blocks evaluate at compile time. Conditionally emit code, unroll loops, and resolve constants before runtime.' },
   { icon: 'ffi', title: 'Bridge (Foreign Functions)', desc: 'Call native C, Objective-C, JVM, JavaScript, C#, Python, and Swift functions via the bridge keyword.' },

@@ -25,9 +25,24 @@ const targets = [
     color: 'text-pastel-pink',
   },
   {
+    name: 'Dart',
+    desc: 'Target Dart 3 with sealed classes, pattern matching, null safety, and Flutter widget support.',
+    color: 'text-pastel-darkblue',
+  },
+  {
+    name: 'Rust',
+    desc: 'Compile to Rust with ownership semantics, enum tagged unions, traits, and zero-cost abstractions.',
+    color: 'text-pastel-red',
+  },
+  {
     name: 'LLVM IR',
     desc: 'Compile to LLVM intermediate representation for native performance on any platform.',
     color: 'text-pastel-green',
+  },
+  {
+    name: 'WebAssembly',
+    desc: 'WASI-compatible WebAssembly for high-performance browser and edge runtime execution.',
+    color: 'text-pastel-white',
   },
 ]
 
