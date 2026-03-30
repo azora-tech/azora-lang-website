@@ -1,16 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const sections = [
-  { label: 'Features', href: '#features' },
-  { label: 'Examples', href: '#examples' },
-  { label: 'Targets', href: '#targets' },
-  { label: 'Ecosystem', href: '#ecosystem' },
-]
-
 const external = [
   { label: 'Playground', href: 'https://code.azoralang.org' },
   { label: 'Book', href: 'https://book.azoralang.org' },
+  { label: 'Documentation', href: 'https://docs.azoralang.org' },
 ]
 
 export default function Navbar() {
@@ -28,17 +22,14 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6">
-          {sections.map(s => (
-            <a key={s.href} href={s.href} className="text-sm text-az-40 hover:text-az-10 transition-colors">
-              {s.label}
-            </a>
-          ))}
-          <span className="w-px h-4 bg-az-65" />
-          {external.map(s => (
+{external.map(s => (
             <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" className="text-sm text-az-40 hover:text-az-primary transition-colors">
               {s.label}
             </a>
           ))}
+          <Link to="/community" className="text-sm text-az-40 hover:text-az-10 transition-colors">
+            Community
+          </Link>
           <Link to="/donate" className="inline-flex items-center gap-1.5 text-sm font-bold text-white bg-az-primary hover:bg-az-primary/80 transition-colors px-3 py-1.5 rounded-lg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
@@ -69,17 +60,14 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="md:hidden bg-az-85 border-b border-az-75 px-4 pb-4 pt-2 flex flex-col gap-3">
-          {sections.map(s => (
-            <a key={s.href} href={s.href} onClick={() => setOpen(false)} className="text-sm text-az-40 hover:text-az-10 transition-colors">
-              {s.label}
-            </a>
-          ))}
-          <span className="h-px bg-az-65" />
-          {external.map(s => (
+{external.map(s => (
             <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" className="text-sm text-az-40 hover:text-az-primary transition-colors">
               {s.label}
             </a>
           ))}
+          <Link to="/community" onClick={() => setOpen(false)} className="text-sm text-az-40 hover:text-az-10 transition-colors">
+            Community
+          </Link>
           <Link to="/donate" onClick={() => setOpen(false)} className="inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-az-primary hover:bg-az-primary/80 transition-colors px-3 py-1.5 rounded-lg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>

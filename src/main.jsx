@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App'
 import Donate from './pages/Donate'
+import Community from './pages/Community'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -11,6 +12,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/donate" element={<Donate />} />
+        <Route path="/community" element={<Community />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
