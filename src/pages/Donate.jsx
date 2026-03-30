@@ -28,35 +28,47 @@ const HeartIcon = () => (
 // Update these values as donations come in
 const fundingGoal = 25000 // yearly goal in USD
 const perMonth = 35      // current monthly donations in USD
-const members = 2        // total supporting members
-const sponsorCount = 0   // number of sponsors
-
-// --- Members ---
-// Add members here: { name, tier }
-// Tiers: 'platinum', 'gold', 'silver', 'bronze'
-const membersList = [
-  { name: 'Merea Games', tier: 'gold', logo: '/assets/merea_logo.jpeg', href: 'https://mereagames.com' },
-  { name: 'DoubleG Arts', tier: 'silver', logo: '/assets/dga.png', href: 'https://doublegarts.eu' },
-]
+const oneTime = 0        // one time donations in USD
+const members = 2        // total supporting sponsors
 
 // --- Sponsors ---
-// Add sponsors here: { name, href, tier }
-// Tiers: 'platinum', 'gold', 'silver', 'bronze'
-const sponsors = [
+// Add sponsors here: { name, tier, logo?, href?, desc? }
+// Tiers: 'diamond', 'platinum', 'gold', 'silver', 'bronze'
+const sponsorsList = [
+  { name: 'Merea Games', tier: 'gold', logo: '/assets/merea_logo.jpeg', href: 'https://mereagames.com', desc: 'Indie game studio crafting immersive experiences.' },
+  { name: 'DoubleG Arts', tier: 'silver', logo: '/assets/dga.png', href: 'https://doublegarts.eu', desc: 'Creative studio for digital art and design.' },
+]
+
+const tierOrder = ['patron', 'diamond', 'titanium', 'platinum', 'gold', 'silver', 'bronze']
+
+const tiers = [
+  { key: 'bronze',   label: 'Bronze',   price: '$5 / month' },
+  { key: 'silver',   label: 'Silver',   price: '$10 / month' },
+  { key: 'gold',     label: 'Gold',     price: '$25 / month' },
+  { key: 'platinum', label: 'Platinum', price: '$50 / month' },
+  { key: 'titanium', label: 'Titanium', price: '$100 / month' },
+  { key: 'diamond',  label: 'Diamond',  price: '$250 / month' },
+  { key: 'patron',   label: 'Patron',   price: '$800 / month' },
 ]
 
 const tierColors = {
-  platinum: 'border-az-10 bg-az-80',
-  gold:     'border-az-yellow bg-az-85',
-  silver:   'border-az-45 bg-az-85',
   bronze:   'border-az-orange bg-az-85',
+  silver:   'border-az-45 bg-az-85',
+  gold:     'border-az-yellow bg-az-85',
+  platinum: 'border-az-10 bg-az-80',
+  titanium: 'border-az-green bg-az-85',
+  diamond:  'border-az-secondary bg-az-85',
+  patron:   'border-az-primary bg-az-80',
 }
 
 const tierLabels = {
-  platinum: 'text-az-10',
-  gold:     'text-az-yellow',
-  silver:   'text-az-45',
   bronze:   'text-az-orange',
+  silver:   'text-az-45',
+  gold:     'text-az-yellow',
+  platinum: 'text-az-10',
+  titanium: 'text-az-green',
+  diamond:  'text-az-secondary',
+  patron:   'text-az-primary',
 }
 
 export default function Donate() {
@@ -83,7 +95,7 @@ export default function Donate() {
             <span className="inline-block text-az-primary mb-4"><HeartIcon /></span>
             <h1 className="text-4xl font-bold text-az-10 mb-3">Support Azora</h1>
             <p className="text-az-45 max-w-xl mx-auto leading-relaxed">
-              Azora is free and open-source. Your donations help fund development, infrastructure, and keep the project sustainable.
+              Azora is free and open-source forever. Your donations help fund development, infrastructure, and keep the project sustainable.
             </p>
           </div>
 
@@ -125,6 +137,28 @@ export default function Donate() {
             </div>
           </section>
 
+          {/* Tiers */}
+          <section className="mb-16">
+            <h2 className="text-xl font-semibold text-az-10 mb-2 text-center">Tiers</h2>
+            <p className="text-az-45 text-center text-sm mb-8">
+              Pick a tier and become a sponsor.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {tiers.map(t => (
+                <a
+                  key={t.key}
+                  href="https://buymeacoffee.com/azoratech/membership"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`rounded-xl border p-5 hover:border-az-primary transition-colors ${tierColors[t.key]}`}
+                >
+                  <p className={`font-bold text-lg ${tierLabels[t.key]}`}>{t.label}</p>
+                  <p className="text-sm text-az-10 mt-1">{t.price}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+
           {/* Funding Stats */}
           <section className="mb-16">
             <h2 className="text-xl font-semibold text-az-10 mb-8 text-center">Funding</h2>
@@ -135,11 +169,11 @@ export default function Donate() {
                 <p className="text-sm text-az-45 mt-1">Per Month</p>
               </div>
               <div className="rounded-xl border border-az-75 bg-az-85 p-6 text-center">
-                <p className="text-3xl font-bold text-az-10">{members.toLocaleString()}</p>
-                <p className="text-sm text-az-45 mt-1">Members</p>
+                <p className="text-3xl font-bold text-az-secondary">${oneTime.toLocaleString()}</p>
+                <p className="text-sm text-az-45 mt-1">One Time</p>
               </div>
               <div className="rounded-xl border border-az-75 bg-az-85 p-6 text-center">
-                <p className="text-3xl font-bold text-az-10">{sponsorCount.toLocaleString()}</p>
+                <p className="text-3xl font-bold text-az-10">{members.toLocaleString()}</p>
                 <p className="text-sm text-az-45 mt-1">Sponsors</p>
               </div>
             </div>
@@ -162,65 +196,53 @@ export default function Donate() {
             </div>
           </section>
 
-          {/* Members */}
-          {membersList.length > 0 && (
+          {/* Sponsors */}
+          {sponsorsList.length > 0 && (
             <section className="mb-16">
-              <h2 className="text-xl font-semibold text-az-10 mb-8 text-center">Members</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {membersList.map(m => {
-                  const content = (
-                    <>
-                      {m.logo && <img src={m.logo} alt={m.name} className="w-10 h-10 rounded-lg object-contain" />}
-                      <div>
-                        <p className="font-semibold text-az-10">{m.name}</p>
-                        <p className={`text-xs font-medium uppercase tracking-wider mt-1 ${tierLabels[m.tier]}`}>{m.tier}</p>
-                      </div>
-                    </>
-                  )
-                  return m.href ? (
-                    <a
-                      key={m.name}
-                      href={m.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`rounded-xl border p-5 flex items-center gap-4 hover:border-az-primary transition-colors ${tierColors[m.tier]}`}
-                    >
-                      {content}
-                    </a>
-                  ) : (
-                    <div key={m.name} className={`rounded-xl border p-5 flex items-center gap-4 ${tierColors[m.tier]}`}>
-                      {content}
+              <h2 className="text-xl font-semibold text-az-10 mb-2 text-center">Sponsors</h2>
+              <p className="text-az-45 text-center text-sm mb-8">
+                Companies and individuals supporting Azora's development.
+              </p>
+              {tierOrder.map(tier => {
+                const items = sponsorsList.filter(s => s.tier === tier)
+                if (items.length === 0) return null
+                return (
+                  <div key={tier} className="mb-6 last:mb-0">
+                    <p className={`text-xs font-medium uppercase tracking-wider mb-3 ${tierLabels[tier]}`}>{tier}</p>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {items.map(m => {
+                        const content = (
+                          <>
+                            {m.logo && <img src={m.logo} alt={m.name} className="w-10 h-10 rounded-lg object-contain" />}
+                            <div>
+                              <p className="font-semibold text-az-10">{m.name}</p>
+                              {m.desc && <p className="text-xs text-az-45 mt-0.5">{m.desc}</p>}
+                            </div>
+                          </>
+                        )
+                        return m.href ? (
+                          <a
+                            key={m.name}
+                            href={m.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`rounded-xl border p-5 flex items-center gap-4 hover:border-az-primary transition-colors ${tierColors[m.tier]}`}
+                          >
+                            {content}
+                          </a>
+                        ) : (
+                          <div key={m.name} className={`rounded-xl border p-5 flex items-center gap-4 ${tierColors[m.tier]}`}>
+                            {content}
+                          </div>
+                        )
+                      })}
                     </div>
-                  )
-                })}
-              </div>
+                  </div>
+                )
+              })}
             </section>
           )}
 
-          {/* Sponsors */}
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold text-az-10 mb-2 text-center">Sponsors</h2>
-            <p className="text-az-45 text-center text-sm mb-8">
-              Companies and individuals supporting Azora's development.
-            </p>
-
-            {sponsors.length > 0 && (
-              <div className="grid sm:grid-cols-2 gap-4">
-                {sponsors.map(s => (
-                  <a
-                    key={s.name}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`rounded-xl border p-5 transition-colors hover:border-az-primary ${tierColors[s.tier]}`}
-                  >
-                    <p className="font-semibold text-az-10">{s.name}</p>
-                    <p className={`text-xs font-medium uppercase tracking-wider mt-1 ${tierLabels[s.tier]}`}>{s.tier}</p>
-                  </a>
-                ))}
-              </div>
-            )}
-          </section>
 
         </div>
       </main>
