@@ -27,14 +27,15 @@ const HeartIcon = () => (
 // --- Funding Stats ---
 // Update these values as donations come in
 const fundingGoal = 25000 // yearly goal in USD
-const perMonth = 10      // current monthly donations in USD
-const members = 1        // total supporting members
+const perMonth = 35      // current monthly donations in USD
+const members = 2        // total supporting members
 const sponsorCount = 0   // number of sponsors
 
 // --- Members ---
 // Add members here: { name, tier }
 // Tiers: 'platinum', 'gold', 'silver', 'bronze'
 const membersList = [
+  { name: 'Merea Games', tier: 'gold', logo: '/assets/merea_logo.jpeg', href: 'https://mereagames.com' },
   { name: 'DoubleG Arts', tier: 'silver', logo: '/assets/dga.png', href: 'https://doublegarts.eu' },
 ]
 
