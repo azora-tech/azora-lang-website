@@ -65,7 +65,7 @@ export default function Donate() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-az-90/80 backdrop-blur-md border-b border-az-75 px-4">
         <div className="max-w-6xl mx-auto h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <span className="font-mono font-bold text-xl text-az-primary">Az</span>
+            <img src="/assets/azora_logo.svg" alt="Azora" className="h-7 w-7" />
             <span className="font-semibold text-az-10">Azora Programming Language</span>
           </Link>
           <Link to="/" className="text-sm text-az-40 hover:text-az-10 transition-colors">

@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-mono font-bold text-xl text-az-primary">Az</span>
+          <img src="/assets/azora_logo.svg" alt="Azora" className="h-7 w-7" />
           <span className="font-semibold text-az-10">Azora Programming Language</span>
           <span className="text-[10px] text-az-60 ml-1.5 border border-az-65 rounded px-1.5 py-0.5">v0.0.1</span>
         </Link>
