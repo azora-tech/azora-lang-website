@@ -1,48 +1,57 @@
 const targets = [
   {
+    name: 'LLVM IR',
+    desc: 'Compile to LLVM intermediate representation for native performance on any platform.',
+    color: 'text-pastel-green',
+    state: 'experimental'
+  },
+  {
     name: 'Kotlin / JVM',
     desc: 'Compile to Kotlin and run on the JVM or KMP. Access the entire Java and Kotlin ecosystem.',
     color: 'text-pastel-purple',
-  },
-  {
-    name: 'C# / .NET',
-    desc: 'Target C# for .NET applications. Leverage the .NET runtime and libraries.',
-    color: 'text-pastel-blue',
+    state: 'experimental'
   },
   {
     name: 'JavaScript',
     desc: 'Generate JavaScript for web browsers and Node.js. Build full-stack with one language.',
     color: 'text-pastel-yellow',
-  },
-  {
-    name: 'Python',
-    desc: 'Generate Python 3 code. Integrate with the Python ecosystem for data science, scripting, and automation.',
-    color: 'text-pastel-orange',
+    state: 'experimental'
   },
   {
     name: 'Swift',
     desc: 'Compile to Swift 6.2 for Apple platforms. Native protocols, classes, and Foundation integration.',
     color: 'text-pastel-pink',
+    state: 'not started'
   },
   {
     name: 'Dart',
     desc: 'Target Dart 3 with sealed classes, pattern matching, null safety, and Flutter widget support.',
     color: 'text-pastel-darkblue',
+    state: 'not started'
+  },
+  {
+    name: 'C# / .NET',
+    desc: 'Target C# for .NET applications. Leverage the .NET runtime and libraries.',
+    color: 'text-pastel-blue',
+    state: 'not started'
   },
   {
     name: 'Rust',
     desc: 'Compile to Rust with ownership semantics, enum tagged unions, traits, and zero-cost abstractions.',
     color: 'text-pastel-red',
+    state: 'not started'
   },
   {
-    name: 'LLVM IR',
-    desc: 'Compile to LLVM intermediate representation for native performance on any platform.',
-    color: 'text-pastel-green',
+    name: 'Python',
+    desc: 'Generate Python 3 code. Integrate with the Python ecosystem for data science, scripting, and automation.',
+    color: 'text-pastel-orange',
+    state: 'not started'
   },
   {
     name: 'WebAssembly',
     desc: 'WASI-compatible WebAssembly for high-performance browser and edge runtime execution.',
     color: 'text-pastel-white',
+    state: 'not started'
   },
 ]
 
@@ -56,7 +65,16 @@ export default function Targets() {
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {targets.map(t => (
-            <div key={t.name} className="rounded-xl border border-az-75 bg-az-85 p-6 text-center hover:border-az-60 transition-colors">
+            <div key={t.name} className={`relative rounded-xl border border-az-75 bg-az-85 p-6 text-center transition-colors overflow-hidden ${
+              t.state === 'not started' ? 'opacity-50 pointer-events-none' : 'hover:border-az-60'
+            }`}>
+              <span className={`absolute top-5 -right-8 rotate-[30deg] text-xs font-bold uppercase tracking-wide px-10 py-1 ${
+                t.state === 'experimental'
+                  ? 'bg-pastel-red text-az-95'
+                  : 'bg-az-60 text-az-95'
+              }`}>
+                {t.state}
+              </span>
               <h3 className={`font-mono font-bold text-lg mb-3 ${t.color}`}>{t.name}</h3>
               <p className="text-sm text-az-45 leading-relaxed">{t.desc}</p>
             </div>
