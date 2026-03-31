@@ -27,9 +27,9 @@ const HeartIcon = () => (
 // --- Funding Stats ---
 // Update these values as donations come in
 const fundingGoal = 25000 // yearly goal in USD
-const perMonth = 35      // current monthly donations in USD
+const perMonth = 40      // current monthly donations in USD
 const oneTime = 0        // one time donations in USD
-const members = 2        // total supporting sponsors
+const members = 3        // total supporting sponsors
 
 // --- Sponsors ---
 // Add sponsors here: { name, tier, logo?, href?, desc? }
@@ -37,6 +37,7 @@ const members = 2        // total supporting sponsors
 const sponsorsList = [
   { name: 'Merea Games', tier: 'gold', logo: '/assets/merea_logo.jpeg', href: 'https://mereagames.com', desc: 'Indie game studio crafting immersive experiences.' },
   { name: 'DoubleG Arts', tier: 'silver', logo: '/assets/dga.png', href: 'https://doublegarts.eu', desc: 'Creative studio for digital art and design.' },
+  { name: 'Daniela Bilciu', tier: 'bronze', logo: '/assets/daniela_bilciu_logo.png', href: 'https://danielabilciu.eu', circle: true, desc: 'Healthcare professional interested in innovative projects of all kind.' },
 ]
 
 const tierOrder = ['patron', 'diamond', 'titanium', 'platinum', 'gold', 'silver', 'bronze']
@@ -108,7 +109,7 @@ export default function Donate() {
                 href="https://paypal.me/digital7tmb"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-xl border border-az-75 bg-az-85 p-6 hover:border-az-primary transition-colors group"
+                className="flex items-center gap-4 rounded-xl border-2 border-transparent bg-az-85 p-6 hover:border-[#00457C] hover:bg-white/10 transition-colors group"
               >
                 <span className="text-[#00457C] group-hover:scale-110 transition-transform">
                   <PayPalIcon />
@@ -124,7 +125,7 @@ export default function Donate() {
                 href="https://buymeacoffee.com/azoratech"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-xl border border-az-75 bg-az-85 p-6 hover:border-az-yellow transition-colors group"
+                className="flex items-center gap-4 rounded-xl border border-transparent bg-az-85 p-6 hover:border-az-yellow hover:bg-white/10 transition-colors group"
               >
                 <span className="text-az-yellow group-hover:scale-110 transition-transform">
                   <CoffeeIcon />
@@ -150,7 +151,7 @@ export default function Donate() {
                   href="https://buymeacoffee.com/azoratech/membership"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`rounded-xl border p-5 hover:border-az-primary transition-colors ${tierColors[t.key]}`}
+                  className={`rounded-xl border p-5 hover:bg-white/10 transition-colors ${tierColors[t.key]}`}
                 >
                   <p className={`font-bold text-lg ${tierLabels[t.key]}`}>{t.label}</p>
                   <p className="text-sm text-az-10 mt-1">{t.price}</p>
@@ -213,7 +214,7 @@ export default function Donate() {
                       {items.map(m => {
                         const content = (
                           <>
-                            {m.logo && <img src={m.logo} alt={m.name} className="w-10 h-10 rounded-lg object-contain" />}
+                            {m.logo && <img src={m.logo} alt={m.name} className={`w-10 h-10 shrink-0 ${m.circle ? 'rounded-full object-cover' : 'rounded-lg object-contain'}`} />}
                             <div>
                               <p className="font-semibold text-az-10">{m.name}</p>
                               {m.desc && <p className="text-xs text-az-45 mt-0.5">{m.desc}</p>}
@@ -226,7 +227,7 @@ export default function Donate() {
                             href={m.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`rounded-xl border p-5 flex items-center gap-4 hover:border-az-primary transition-colors ${tierColors[m.tier]}`}
+                            className={`rounded-xl border p-5 flex items-center gap-4 hover:bg-white/10 transition-colors ${tierColors[m.tier]}`}
                           >
                             {content}
                           </a>
