@@ -29,7 +29,7 @@ const HeartIcon = () => (
 const fundingGoal = 25000 // yearly goal in USD
 const perMonth = 40      // current monthly donations in USD
 const oneTime = 0        // one time donations in USD
-const members = 3        // total supporting sponsors
+const members = 4        // total supporting sponsors
 
 // --- Sponsors ---
 // Add sponsors here: { name, tier, logo?, href?, desc? }
@@ -38,6 +38,7 @@ const sponsorsList = [
   { name: 'Merea Games', tier: 'gold', logo: '/assets/merea_logo.jpeg', href: 'https://mereagames.com', desc: 'Indie game studio crafting immersive experiences.' },
   { name: 'DoubleG Arts', tier: 'silver', logo: '/assets/dga.png', href: 'https://doublegarts.eu', desc: 'Creative studio for digital art and design.' },
   { name: 'Daniela Bilciu', tier: 'bronze', logo: '/assets/daniela_bilciu_logo.png', href: 'https://danielabilciu.eu', circle: true, desc: 'Healthcare professional interested in innovative projects of all kind.' },
+  { name: 'Mihaela Gheorghe', tier: 'bronze', circle: true, desc: 'Generous supporter of open-source development.' },
 ]
 
 const tierOrder = ['patron', 'diamond', 'titanium', 'platinum', 'gold', 'silver', 'bronze']
@@ -214,7 +215,13 @@ export default function Donate() {
                       {items.map(m => {
                         const content = (
                           <>
-                            {m.logo && <img src={m.logo} alt={m.name} className={`w-10 h-10 shrink-0 ${m.circle ? 'rounded-full object-cover' : 'rounded-lg object-contain'}`} />}
+                            {m.logo ? (
+                              <img src={m.logo} alt={m.name} className={`w-10 h-10 shrink-0 ${m.circle ? 'rounded-full object-cover' : 'rounded-lg object-contain'}`} />
+                            ) : (
+                              <div className={`w-10 h-10 shrink-0 flex items-center justify-center bg-az-75 text-az-30 font-bold text-lg ${m.circle ? 'rounded-full' : 'rounded-lg'}`}>
+                                {m.name.charAt(0)}
+                              </div>
+                            )}
                             <div>
                               <p className="font-semibold text-az-10">{m.name}</p>
                               {m.desc && <p className="text-xs text-az-45 mt-0.5">{m.desc}</p>}

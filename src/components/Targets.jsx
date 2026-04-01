@@ -12,9 +12,9 @@ const targets = [
     state: 'experimental'
   },
   {
-    name: 'JavaScript',
-    desc: 'Generate JavaScript for web browsers and Node.js. Build full-stack with one language.',
-    color: 'text-pastel-yellow',
+    name: 'TypeScript',
+    desc: 'Generate TypeScript for web browsers and Node.js. Build full-stack with one language.',
+    color: 'text-pastel-teal',
     state: 'experimental'
   },
   {
