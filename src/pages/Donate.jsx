@@ -27,7 +27,7 @@ const HeartIcon = () => (
 // --- Funding Stats ---
 // Update these values as donations come in
 const fundingGoal = 25000 // yearly goal in USD
-const perMonth = 40      // current monthly donations in USD
+const perMonth = 45      // current monthly donations in USD
 const oneTime = 0        // one time donations in USD
 const members = 4        // total supporting sponsors
 

@@ -110,7 +110,7 @@ export default function Hero({ engine }) {
     <section className="pt-28 pb-20 px-4">
       <style>{tokenCSS}</style>
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start">
-        <div className="pt-20">
+        <div className="pt-24">
           <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
 
             <span className="text-az-primary">Fast.</span>{' '}
@@ -118,8 +118,7 @@ export default function Hero({ engine }) {
             Expressive.
           </h1>
           <p className="text-lg text-az-40 mb-8 max-w-xl">
-Azora is a modern programming language with real-time IR generation.
-No build step. Just code and run, targeting native, web, and mobile from a single language.          </p>
+            Azora is a modern general purpose programming language with real-time IR generation. No build step. Just code and run, targeting native, web, and mobile from a single language.          </p>
           <div className="flex flex-wrap gap-4">
             <a
               href="https://code.azoralang.org"
