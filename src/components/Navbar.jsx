@@ -5,6 +5,7 @@ const external = [
   { label: 'Playground', href: 'https://code.azoralang.org' },
   { label: 'Book', href: 'https://book.azoralang.org' },
   { label: 'Documentation', href: 'https://docs.azoralang.org' },
+  { label: 'Community', href: 'https://azoralabs.org/community' },
 ]
 
 export default function Navbar() {
@@ -27,15 +28,12 @@ export default function Navbar() {
               {s.label}
             </a>
           ))}
-          <Link to="/community" className="text-sm text-az-40 hover:text-az-10 transition-colors">
-            Community
-          </Link>
-          <Link to="/donate" className="inline-flex items-center gap-1.5 text-sm font-bold text-white bg-az-primary hover:bg-az-primary/80 transition-colors px-3 py-1.5 rounded-lg">
+          <a href="https://azoralabs.org/donate" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm font-bold text-white bg-az-primary hover:bg-az-primary/80 transition-colors px-3 py-1.5 rounded-lg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
             </svg>
             Donate
-          </Link>
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -65,15 +63,12 @@ export default function Navbar() {
               {s.label}
             </a>
           ))}
-          <Link to="/community" onClick={() => setOpen(false)} className="text-sm text-az-40 hover:text-az-10 transition-colors">
-            Community
-          </Link>
-          <Link to="/donate" onClick={() => setOpen(false)} className="inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-az-primary hover:bg-az-primary/80 transition-colors px-3 py-1.5 rounded-lg">
+          <a href="https://azoralabs.org/donate" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 text-sm font-bold text-white bg-az-primary hover:bg-az-primary/80 transition-colors px-3 py-1.5 rounded-lg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
             </svg>
             Donate
-          </Link>
+          </a>
         </div>
       )}
     </nav>

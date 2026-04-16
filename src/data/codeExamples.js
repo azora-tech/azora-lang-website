@@ -188,13 +188,13 @@ func main() {
   {
     title: 'Flows',
     code: `flow range(n: Int): Int {
-    for i in 0..n {
+    for i: Int in 0..n {
         yield i
     }
 }
 
 flow evens(n: Int): Int {
-    for i in 0..n {
+    for i: Int in 0..n {
         if i % 2 == 0 {
             yield i
         }
